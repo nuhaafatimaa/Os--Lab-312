@@ -1,0 +1,25 @@
+sleep 500 &
+pmap -x $!
+cat > mem_map.c << 'EOF'
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+int global_var = 10;
+int main() {
+    int local_var = 5;
+    char *heap = malloc(10 * 1024 * 1024);
+    for (int i = 0; i < 10 * 1024 * 1024; i += 4096) heap[i] = 1;
+    printf("PID: %d\n", getpid());
+    printf("Code  (main)  : %p\n", (void *)main);
+    printf("Data  (global): %p\n", (void *)&global_var);
+    printf("Heap  (malloc): %p\n", (void *)heap);
+    printf("Stack (local) : %p\n", (void *)&local_var);
+    fflush(stdout);
+    sleep(600);
+    return 0;
+}
+EOF
+gcc mem_map.c -o mem_map
+./mem_map &
+pmap -x $!
+pmap -x $! | awk 'NR>2 && $2 ~ /^[0-9]+$/ { ok = ($4 <= $3 && $3 <= $2) ? "OK" : "VIOLATION"; print $1, $2, $3, $4, ok }'

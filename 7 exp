@@ -1,0 +1,40 @@
+cat > cpu_bound.c << 'EOF'
+#include <stdio.h>
+int main() {
+    volatile unsigned long long x = 0;
+    while (1) {
+        x = x * 3 + 1;
+        x = x / 2 + 7;
+    }
+    return 0;
+}
+EOF
+gcc cpu_bound.c -o cpu_bound
+cat > io_bound.c << 'EOF'
+#include <stdio.h>
+#include <unistd.h>
+int main() {
+    FILE *fp;
+    int i = 0;
+    while (1) {
+        fp = fopen("io_output.txt", "a");
+        if (fp == NULL) {
+            perror("fopen");
+            return 1;
+        }
+        fprintf(fp, "Write number %d\n", i++);
+        fclose(fp);
+        sleep(1);
+    }
+    return 0;
+}
+EOF
+gcc io_bound.c -o io_bound
+./cpu_bound &
+./io_bound &
+sleep 3
+jobs
+ps -o pid,stat,ni,pri,%cpu,command -p $(pgrep -d, -x "cpu_bound|io_bound")
+top -l 2 -o cpu | grep -E "cpu_bound|io_bound"
+killall cpu_bound io_bound
+rm -f io_output.txt

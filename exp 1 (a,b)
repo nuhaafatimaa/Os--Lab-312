@@ -1,0 +1,104 @@
+pwd
+ls
+ls -l
+ls -a
+ls -lh
+ls -R
+cd ~/Desktop
+cd ..
+cd ~
+cd -
+tree
+
+mkdir MIET
+mkdir CSE AIML CYBER
+mkdir -p MIET/CSE/AIML/Maths
+rmdir MIET
+rm -r MIET
+rm -ri MIET
+
+touch file1.txt
+echo "Hello"
+cp file1.txt file2.txt
+cp -r dir1 dir2
+mv file2.txt file3.txt
+mv file3.txt MIET/
+rm file1.txt
+rm -i file1.txt
+
+cat file1.txt
+more file1.txt
+less file1.txt
+head file1.txt
+head -n 2 file1.txt
+tail file1.txt
+tail -n 2 file1.txt
+tail -f file1.txt
+sort file1.txt
+wc file1.txt
+
+echo "text" > file1.txt
+echo "more" >> file1.txt
+cat > file1.txt
+cat >> file1.txt
+ls /root &> output.txt
+ls /root 2> error.txt
+ls | grep "file1"
+
+find . -name "file1.txt"
+find . -iname "FILE1.TXT"
+find . -name "*.txt"
+find . -type f
+find . -type d
+find . -size +1M
+find . -mtime -1
+find . -name "*.tmp" -delete
+find . -name "*.txt" -exec grep -l "word" {} \;
+grep "text" file1.txt
+grep -r "text" .
+grep -i "text" file1.txt
+grep -n "text" file1.txt
+
+sleep 100
+sleep 100 &
+jobs
+fg %1
+bg %1
+ps
+ps -e
+ps -ef
+ps aux
+ps -o pid,ni,command
+top
+kill PID
+kill -9 PID
+kill -STOP PID
+kill -CONT PID
+kill %1
+killall sleep
+nice -n 10 sleep 100 &
+renice -n 5 -p PID
+sudo ls /root
+
+nano file1.txt
+vi file1.txt
+
+sed 's/old/new/' file1.txt
+sed 's/old/new/g' file1.txt
+sed -n '2p' file1.txt
+sed -n '2,4p' file1.txt
+sed '3d' file1.txt
+sed -i '' 's/old/new/' file1.txt
+sed -i '.bak' 's/old/new/' file1.txt
+sed -E 's/(.*) (.*)/\2 \1/' file1.txt
+
+whoami
+who
+date
+date "+%Y-%m-%d"
+history
+clear
+man ls
+
+chmod +x file1.txt
+chm

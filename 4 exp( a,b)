@@ -1,0 +1,24 @@
+cat > loginduration.sh << 'EOF'
+#!/bin/bash
+
+if [ $# -eq 0 ]; then
+    echo "Usage: ./loginduration.sh <username>"
+    exit 1
+fi
+
+user=$1
+
+if who | grep -q "^$user "; then
+    echo "Login details for $user:"
+    who | grep "^$user "
+    echo ""
+    echo "Session history (last):"
+    last "$user" | head -n 5
+else
+    echo "$user is not currently logged in"
+    echo "Previous sessions:"
+    last "$user" | head -n 5
+fi
+EOF
+chmod +x loginduration.sh
+./loginduration.sh $(whoami)

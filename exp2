@@ -1,0 +1,6 @@
+date; who > who_output.txt
+cat who_output.txt
+printf "hello world today\ngood morning everyone\n" > file.txt
+sed -E 's/^([^ ]+) ([^ ]+)/\2 \1/' file.txt
+sed -i '.bak' -E 's/^([^ ]+) ([^ ]+)/\2 \1/' file.txt
+cat file.txt
